@@ -63,6 +63,16 @@ The following entities are stored on the Firebase:
 }
 ```
 
+> Promotion
+```json
+{
+  "id": "uuid",
+  "name": "name",
+  "restaurantName": "name",
+  "restaurantID": "uuid",
+  "products": ["name", "name"]
+}
+```
 
 ### Pub Sub
 
