@@ -41,6 +41,7 @@ The following entities are stored on the Firebase:
   "email": "email@email.com.br",
   "id": "uuid",
   "name": "name",
+  "category" : [],
   "password": "encrypted",
   "type": "REGULAR|RESTAURANT"
 }
