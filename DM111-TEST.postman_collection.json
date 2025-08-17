@@ -1,0 +1,580 @@
+{
+	"info": {
+		"_postman_id": "ca373231-dadd-476b-ac9e-fdecff4b46fa",
+		"name": "DM111-TEST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31842846"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Authentication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"restaurantUserToken\", jsonData[\"token\"]);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"alled@email.com\",\n  \"password\": \"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{vfa-host}}/valefood/auth",
+							"host": [
+								"{{vfa-host}}"
+							],
+							"path": [
+								"valefood",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "List users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{vfu-host}}/valefood/users",
+							"host": [
+								"{{vfu-host}}"
+							],
+							"path": [
+								"valefood",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Token",
+								"value": "{{restaurantUserToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{vfu-host}}/valefood/users/e8682d98-133e-41bd-8796-8a3f07d89e6f",
+							"host": [
+								"{{vfu-host}}"
+							],
+							"path": [
+								"valefood",
+								"users",
+								"e8682d98-133e-41bd-8796-8a3f07d89e6f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create regular user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"regularUserId\", jsonData[\"id\"]);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Edilson\",\n    \"email\": \"edilson@gmail.com\",\n    \"password\": \"admin\",\n    \"type\": \"REGULAR\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{vfu-host}}/valefood/users",
+							"host": [
+								"{{vfu-host}}"
+							],
+							"path": [
+								"valefood",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create restaurant user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"restaurantUserId\", jsonData[\"id\"]);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Edilson R\",\n    \"email\": \"edilson.restaurant@gmail.com\",\n    \"password\": \"admin\",\n    \"type\": \"RESTAURANT\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{vfu-host}}/valefood/users",
+							"host": [
+								"{{vfu-host}}"
+							],
+							"path": [
+								"valefood",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Token",
+								"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkbTExMS0yMDI1Iiwic3ViIjoiYWxsZWRAZW1haWwuY29tIiwicm9sZSI6IlJFU1RBVVJBTlQiLCJpYXQiOjE3NTUzNDg4ODYsImV4cCI6MTc1NTM0OTQ4Nn0.d3UEnaAT_ML5NEO0P4btcPbY4FvAvnvOedBwMbE7zkMdyLj3Qngo-gaU_Yubvq_1l_flLtRN9JU2aifUqJf0JjbjpOX3JP0YqguEg796NWyxyYKfwYSkceH0ioWFxwOaNvQ8kOkSV0zeOZWubPZ6EdfbU9mjTGYwv3BIg7sbgEub8JWCW6gCOn1NSx3EzldBjTigQqKadhsb3DzpYrzBeZ2Qjvxxd-ZjXhDE7nDjXUhRw8kJvjGEb0Fyd9PLzPdp4Ykp0_tT2H-6N5khYD_Klero0bMaG-FZKht19uvYgtOtQptiN8h9sQFBdhZ-kABdnvRN_9s80s2SH5tTF0WUmg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Edilson\",\n    \"email\": \"edilson@gmail.com\",\n    \"password\": \"admin\",\n    \"type\": \"REGULAR\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{vfu-host}}/valefood/users/",
+							"host": [
+								"{{vfu-host}}"
+							],
+							"path": [
+								"valefood",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Token",
+								"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkbTExMS0yMDI1Iiwic3ViIjoiYWxsZWRAZW1haWwuY29tIiwicm9sZSI6IlJFU1RBVVJBTlQiLCJpYXQiOjE3NTUzNDg4ODYsImV4cCI6MTc1NTM0OTQ4Nn0.d3UEnaAT_ML5NEO0P4btcPbY4FvAvnvOedBwMbE7zkMdyLj3Qngo-gaU_Yubvq_1l_flLtRN9JU2aifUqJf0JjbjpOX3JP0YqguEg796NWyxyYKfwYSkceH0ioWFxwOaNvQ8kOkSV0zeOZWubPZ6EdfbU9mjTGYwv3BIg7sbgEub8JWCW6gCOn1NSx3EzldBjTigQqKadhsb3DzpYrzBeZ2Qjvxxd-ZjXhDE7nDjXUhRw8kJvjGEb0Fyd9PLzPdp4Ykp0_tT2H-6N5khYD_Klero0bMaG-FZKht19uvYgtOtQptiN8h9sQFBdhZ-kABdnvRN_9s80s2SH5tTF0WUmg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Edilson\",\n    \"email\": \"edilson@gmail.com\",\n    \"password\": \"admin\",\n    \"type\": \"REGULAR\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{vfu-host}}/valefood/users/9c073977-609d-4418-a99b-32698c670726",
+							"host": [
+								"{{vfu-host}}"
+							],
+							"path": [
+								"valefood",
+								"users",
+								"9c073977-609d-4418-a99b-32698c670726"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Restaurants",
+			"item": [
+				{
+					"name": "List restaurants",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{restaurantUserToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{vfr-host}}/valefood/restaurants",
+							"host": [
+								"{{vfr-host}}"
+							],
+							"path": [
+								"valefood",
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List restaurant",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Token",
+								"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkbTExMS0yMDI1Iiwic3ViIjoiYWxsZWRAZW1haWwuY29tIiwicm9sZSI6IlJFU1RBVVJBTlQiLCJpYXQiOjE3NTUzMDM5ODIsImV4cCI6MTc1NTMwNDU4Mn0.YIb06aDdTF4uQkqQaUr3NupCucil1pd9LlfDmy26uQ9jgYjcyCrbf4ORWd-0CbPNpxM3j8dFncoy1HBXPXx9Q5OjhMvL9wysyyMcL8J-srSkNYVS7iEQmIvdFB_Zdhag8yjrnIU-_V1G_WDxNepdjjGBs7D3RI3m3pjuuEE2mR9u7QMeCw2fLet_sja8y71CoE7ieTqVSoNfm22uAY2eBlfUIDh6Y9bX7SG8xaoKgEHftrHHnO_CkSi7d3XVjPFz8H7HRl1VjKlcKc6LEVMu_7eZaT0OFsCBAuulXh_f9QRY2-D4PCNqq_uMdznMwJFOtNVsFglf3ph10ac9c5ySYg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{vfr-host}}/valefood/restaurants/{{restaurantId}}",
+							"host": [
+								"{{vfr-host}}"
+							],
+							"path": [
+								"valefood",
+								"restaurants",
+								"{{restaurantId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create restaurant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"restaurantId\", jsonData[\"id\"]);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Token",
+								"value": "{{restaurantUserToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Da Roça\",\n    \"address\": \"Av. São Pedro, 1\",\n    \"userId\": \"{{restaurantUserId}}\",\n    \"categories\": [\n        \"pizza\",\n        \"refeicao\",\n        \"burguer\"\n    ],\n    \"products\": [\n        {\n            \"name\": \"Marguerita\",\n            \"description\": \"Pizza de Marguerita\",\n            \"category\": \"pizza\",\n            \"price\": 55\n        },\n        {\n            \"name\": \"X-Tudo\",\n            \"description\": \"X-Tudo Completo\",\n            \"category\": \"burguer\",\n            \"price\": 28\n        },{\n            \"name\": \"Prato Feito\",\n            \"description\": \"Arroz, feijão e bife\",\n            \"category\": \"refeicao\",\n            \"price\": 28\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{vfr-host}}/valefood/restaurants/",
+							"host": [
+								"{{vfr-host}}"
+							],
+							"path": [
+								"valefood",
+								"restaurants",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update restaurant",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Token",
+								"value": "{{restaurantUserToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Da Roça\",\n    \"address\": \"Av. São Pedro, 200\",\n    \"userId\": \"{{restaurantUserId}}\",\n    \"categories\": [\n        \"pizza\",\n        \"refeicao\",\n        \"burguer\"\n    ],\n    \"products\": [\n        {\n            \"id\": \"77a58a32-3936-4006-8fc0-7a1b29c87d13\",\n            \"name\": \"Marguerita\",\n            \"description\": \"Pizza de Marguerita\",\n            \"category\": \"pizza\",\n            \"price\": 55.0\n        },\n        {\n            \"id\": \"217761dc-6617-40ce-ac65-d9cf58c15291\",\n            \"name\": \"X-Tudo\",\n            \"description\": \"X-Tudo Completo\",\n            \"category\": \"burguer\",\n            \"price\": 28.0\n        },\n        {\n            \"id\": \"2eafce55-c991-4558-ba92-04d9ad86c189\",\n            \"name\": \"Prato Feito\",\n            \"description\": \"Arroz, feijão e bife\",\n            \"category\": \"refeicao\",\n            \"price\": 28.0\n        }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{vfr-host}}/valefood/restaurants/{{restaurantId}}",
+							"host": [
+								"{{vfr-host}}"
+							],
+							"path": [
+								"valefood",
+								"restaurants",
+								"{{restaurantId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Restauratn",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Token",
+								"value": "{{restaurantUserToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{vfr-host}}/valefood/restarurants/{{restaurantId}}",
+							"host": [
+								"{{vfr-host}}"
+							],
+							"path": [
+								"valefood",
+								"restarurants",
+								"{{restaurantId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Promotions",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/valefood/promotion?Token={{restaurantUserToken}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"valefood",
+								"promotion"
+							],
+							"query": [
+								{
+									"key": "Token",
+									"value": "{{restaurantUserToken}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By User ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/valefood/promotion/e645053f-63b6-4338-a7c3-1c89129dcf30",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"valefood",
+								"promotion",
+								"e645053f-63b6-4338-a7c3-1c89129dcf30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/valefood/promotion/e645053f-63b6-4338-a7c3-1c89129dcf30",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"valefood",
+								"promotion",
+								"e645053f-63b6-4338-a7c3-1c89129dcf30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Promotion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Promoção MALUCA\",\n  \"restaurant\": \"Don Rafoni\",\n  \"discount\": 10,\n  \"categories\": [\"cafe\", \"salgados\", \"lanches\"],\n  \"product\": [ \"cafe\", \"enroladinho\", \"x-bacon\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/valefood/promotion",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"valefood",
+								"promotion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Promotion",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Promoção MALUCA\",\n  \"restaurantName\": \"Da Roça\",\n  \"restaurantId\": \"8c46bbff-0df4-4885-b6c7-778d19b9e7e4\",\n  \"discount\": 20,\n  \"categories\": [\"cafe\", \"salgados\", \"lanches\"],\n  \"product\": [ \"cafe\", \"enroladinho\", \"x-bacon\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/valefood/promotion/0dac4f0f-c198-46a8-859f-295dc1fee354",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"valefood",
+								"promotion",
+								"0dac4f0f-c198-46a8-859f-295dc1fee354"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Promotion",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/valefood/promotion/0dac4f0f-c198-46a8-859f-295dc1fee354",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"valefood",
+								"promotion",
+								"0dac4f0f-c198-46a8-859f-295dc1fee354"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
